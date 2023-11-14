@@ -1,0 +1,122 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tinydoc</title>
+  <link href="/.modules/bootstrap/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="/.modules/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="/.modules/highlight.js/styles/atom-one-dark.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+
+<body data-bs-theme="dark">
+
+  <!-- Desktop Navbar -->
+  <div class="p-2 d-lg-inline d-none"></div>
+  <header class="p-3 mb-3 border-bottom fixed-top bg-dark-subtle d-lg-inline d-none">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 me-2 mb-lg-0 link-body-emphasis text-decoration-none">
+          <i class="bi bi-clipboard-heart-fill" style="font-size:30px"></i>
+        </a>
+        <a href="/" class="d-flex align-items-center mb-2 mt-1 me-2 mb-lg-0 link-body-emphasis text-decoration-none">
+          <h3 class="fw-bolder" style="font-size:25px">Tinydoc</h3>
+        </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="/" class="nav-link px-2 link-body-emphasis">Documentation</a></li>
+        </ul>
+        <a href="https://github.com/prplwtf/tinydoc"><button type="button" class="btn btn-primary">GitHub</button></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile/Tablet Navbar -->
+  <div class="p-2 d-lg-none d-inline"></div>
+  <nav class="navbar bg-dark-subtle fixed-top d-lg-none d-inline">
+    <div class="container-fluid">
+      <a href="/" class="d-flex align-items-center mb-2 me-2 mt-2 mb-lg-0 link-body-emphasis text-decoration-none"><img src="/.assets/tinydoc-black.png" width="40" height="40" class="rounded-3" alt="" /></a>
+      <div class="dropdown">
+        <button class="btn btn-secondary bg-dark-subtle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px">
+          <li><a class="dropdown-item rounded-2 disabled" href="/">Documentation</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item rounded-2" href="https://github.com/prplwtf/tinydoc">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <!-- Content -->
+  <div class="mt-5 opacity-0">.</div>
+  <div class="container mt-1">
+    <div class="row">
+      <div class="col-lg-2 col-md-4 col-sm-12">
+        <div class="docs-category pb-4">
+          <div class="ms-2"><span class="fw-bolder">Getting started</span><br></div>
+          <a href="?page=GettingStarted/Introduction"><button type="button" class="btn btn-dark btn-sm text-start" style="--bs-btn-padding-y: .1rem;">Introduction</button></a><br>
+        </div>
+        <div class="docs-category pb-4">
+          <div class="ms-2"><span class="fw-bolder">Category 2</span><br></div>
+        </div>
+        <div class="docs-category pb-4">
+          <div class="ms-2"><span class="fw-bolder">About</span><br></div>
+          <a href="?page=About/License"><button type="button" class="btn btn-dark btn-sm text-start" style="--bs-btn-padding-y: .1rem;">License</button><br></a>
+        </div>
+      </div>
+      <div class="container d-lg-none d-md-none d-sm-inline mb-4"><div class="border-bottom"></div></div>
+      <div class="col-lg-10 col-md-8 col-sm-12" id="content">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border spinner-border-sm text-secondary mt-4" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+  <!-- Footer -->
+  <div class="container">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+        <i class="bi bi-clipboard-heart text-body-secondary" style="font-size:25px"></i>
+      </a>
+      <span class="mb-3 mb-md-0 text-body-secondary">© 2023 Tinydoc</span>
+    </div>
+
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+      <li class="ms-3"><a class="text-body-secondary" href="https://github.com/prplwtf/tinydoc"><i class="bi bi-github" width="24" height="24"></i></a></li>
+    </ul>
+  </footer>
+</div>
+
+  <script src="/.modules/bootstrap/js/bootstrap.bundle.js" crossorigin="anonymous"></script>
+  <script src="/.modules/marked/marked.min.js" crossorigin="anonymous"></script>
+  <script src="/.modules/highlight.js/highlight.min.js" crossorigin="anonymous"></script>
+  <script>
+    var u = new URL(window.location.href);
+    var d = u.searchParams.get('page');
+    try { document.querySelector('a[href="?page='+d+'"] button').classList.add("disabled") } catch {  }
+    if(d) { a = './documentation/'+d+'.md' } else { a = './documentation/Documentation.md' }
+    fetch(a)
+      .then(b => {
+        if (!b.ok) {
+          throw new Error(`Network response was not ok: ${b.status}`);
+          window.location="?page=Error"
+        }
+        return b.text();
+      })
+      .then(markdownContent => {
+        document.getElementById('content').innerHTML = marked.parse(markdownContent);
+        hljs.highlightAll(document.getElementById('content'));
+      })
+      .catch(c => {
+        console.error('Error fetching the Markdown content:', c);
+        window.location="?page=Error"
+      });
+  </script>
+</body>
