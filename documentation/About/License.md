@@ -1,14 +1,10 @@
 # License
 <h4 class="fw-light">License which source code is distributed under</h4><br/>
-<div class="alert alert-warning" role="alert">
-  <i class="bi bi-exclamation-triangle-fill mb-1" style="font-size:23px; float: left;"></i>
-  <div class="ps-3 ms-3">This license is used for <a href="https://github.com/prplwtf/tinydocs" class="alert-link">prplwtf/tinydocs</a> and all documentation websites made with it's source code.</div>
-</div><br/>
 
 ```txt
 MIT License
 
-Copyright (c) 2023 Dion den Engelsen
+Copyright (c) 2023-2024 Emma (prpl.wtf)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
